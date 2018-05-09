@@ -1,0 +1,36 @@
+//
+//  main.cpp
+//  dayly test
+//
+//  Created by Lion Heart on 2018/5/8.
+//  Copyright © 2018年 Lion. All rights reserved.
+//
+
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+int main()
+{
+    vector<int> v;
+    cout << "enter a list of positive numbers.\n"
+    <<"placs a nagetive number at the end.\n";
+    
+    int next;
+    cin>>next;
+    while (next>0) {
+        v.push_back(next);
+        cout << next << "  added.";
+        cout << "v.size()=" << v.size() <<endl;
+        cin>> next;
+    }
+    cout << "you entered:\n";
+    for (unsigned int i=0; i<v.size(); i++)
+        cout << v[i]<<" ";
+    cout <<endl;
+    
+    return 0;
+}

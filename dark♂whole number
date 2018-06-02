@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <string.h>
+#include <cstdlib>
+
+using namespace std;
+
+void func(char a[])
+{
+    char temp[200];
+    strcpy(temp, a);
+    size_t z=strlen(a);
+    for (int i=0,j=(int)z-1; i<z; i++,j--) {
+        temp[i]=a[j];
+        //cout <<temp[i]<<endl;
+    }
+    strcpy(a, temp);
+}
+
+int main()
+{
+    char a[200],b[200],c[200];
+    bool flag=0;
+    cin >> a>>b;
+    func(a);
+    func(b);
+    size_t len1=strlen(a),len2=strlen(b),maxlen=len2;
+    if (len1>200||len2>200) {
+        exit(0);
+    }
+    if (len1>len2) {
+        maxlen=len1;
+        flag=1;
+    }
+    //char temp[200]={0};
+    char *temp=new char[maxlen];
+    for (int i=0; i<maxlen; i++) {
+        temp[i]='0';
+    }
+    if (flag==1) {
+        for (int i=0; i<len2; i++) {
+            temp[i]=b[i];
+        }
+        /*for (int i=0; i<maxlen; i++) {
+            cout <<temp[i]<<endl;
+        }*/
+        for (int i=0; i<maxlen; i++) {
+            c[i]=temp[i]+a[i]-'0';
+        }
+    }
+    else
+    {
+        for (int i=0; i<len1; i++) {
+            temp[i]=a[i];
+        }
+        for (int i=0; i<maxlen; i++) {
+            c[i]=temp[i]+b[i]-'0';
+        }
+    }
+    func(c);
+    cout<<c;
+    
+    delete [] temp;
+    return 0;
+}
+
+
+
+
+
+
+
+//2018年05月30日19:54:49  temp怎么用的问题     顺序还是逆序的问题

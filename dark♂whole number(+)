@@ -27,7 +27,7 @@ void fun_jinwei(char a[],char b[])
 int main()
 {
     char a[200],b[200],c[200];
-    bool flag=0,jinwei_flag=0;
+    bool flag=0,jinwei_flag=0,jiashu_flag=0;
     cin >> a>>b;
     func(a);
     func(b);
@@ -61,8 +61,11 @@ int main()
                 c[i]=temp[i]+a[i]-'0'+1;
                 jinwei_flag=0;
             }
+            if (c[maxlen-1]>9) {
+                jiashu_flag=1;
+            }
             if (c[i]>'9') {
-                c[i]-=9;
+                c[i]-=10;
                 jinwei_flag=1;
             }
             
@@ -82,14 +85,22 @@ int main()
                 c[i]=temp[i]+b[i]-'0'+1;
                 jinwei_flag=0;
             }
+            if (c[maxlen-1]>9) {
+                jiashu_flag=1;
+            }
             if (c[i]>'9') {
-                c[i]-=9;
+                c[i]-=10;
                 jinwei_flag=1;
             }
         }
     }
     func(c);
-    cout<<c;
+    if (jiashu_flag==0) {
+        cout<<c;
+    }
+    else{
+        cout<<'1'<<c;
+    }
     
     delete [] temp;
     return 0;

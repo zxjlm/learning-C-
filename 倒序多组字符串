@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <string.h>
+#include <cstdlib>
+#include <stdio.h>
+
+using namespace std;
+
+#define max 1000
+
+struct A {
+    char a[max];
+};
+
+int main()
+{
+    int n;
+    cin>>n;
+    cin.get();
+    A *p=new A[n];
+    for (int i=0; i<n; i++) {
+        //cout <<i<<endl;
+        char temp[max]={0};
+        cin.getline(p[i].a,1000);
+        size_t k=strlen(p[i].a)-1;
+        for (int j=0; j<(strlen(p[i].a)); j++,k--) {
+            temp[k]=p[i].a[j];
+        }
+        stpcpy(p[i].a, temp);
+       // cout <<i<<endl;
+
+    }
+    for (int i=0; i<n; i++) {
+        cout << p[i].a<<endl;
+    }
+    
+    delete [] p;
+    return 0;
+}
+
+
+//cin.getline会读取缓冲区的回车键（可能性情况），造成直接跳过的情况，所以在前面加cin.get();

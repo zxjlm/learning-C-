@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <string.h>
+#include <cstdlib>
+#include <stdio.h>
+
+using namespace std;
+
+#define max 1000
+
+struct hei {
+    int x;
+    int y=0;
+};
+
+int main()
+{
+    int a[max]={0},flag=0,b,i;
+    bool flag1=0;
+    hei m[max];
+    char c;
+    while((c=getchar())!='\n')
+    {
+        if(c!=' ')
+        {
+            ungetc(c,stdin);
+            cin>>b;
+            a[b]++;
+            for (i=0; i<flag; i++) {
+                if (m[i].x==b)
+                {
+                    flag1=1;
+                    break;
+                }
+            }
+            if (flag1==1) {
+                m[i].y=a[b];
+                flag1=0;
+            }
+            else
+            {
+                m[flag].x=b;
+                m[flag].y=a[b];
+                flag++;
+            }
+            }
+    }
+    for(int i=0;i<flag-1;i++)
+    {
+        for (int j=i; j<flag; j++) {
+            if(m[i].x>m[j].x)
+                swap(m[i], m[j]);
+        }
+    }
+    for (int i=0; i<flag; i++) {
+        cout << m[i].x << " "<<m[i].y<<endl;
+    }
+    
+    
+    
+    return 0;
+}
+
+

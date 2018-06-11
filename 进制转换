@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <string.h>
+#include <cstdlib>
+#include <stdio.h>
+
+using namespace std;
+
+struct lei {
+    int p,m;
+    int q,n;
+    int r,l;
+    int flag;
+};
+
+int func1(int x)
+{
+    int flag=1;
+    while (x/10!=0) {
+        x=x/10;
+        flag++;
+    }
+    return flag;
+}
+
+int summary(int x,int y)
+{
+    int temp=x;
+    int sum=0,flag=func1(x),i=0;
+        while (x/10!=0) {
+            int test=pow(y,i++);
+            sum+=(((x%10))*test);
+            
+            x=x/10;
+            
+        }
+    sum+=(int)(temp/pow(10, flag-1))*pow(y, i);
+    return sum;
+}
+
+int fun2(lei x)
+{
+    int sum1,sum2,sum3,i;
+    for (i=2; i<17; i++) {
+        sum1=summary(x.p, i);
+        sum2=summary(x.q, i);
+        sum3=summary(x.r, i);
+        if (sum1*sum2==sum3) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+    int T;
+    cin>>T;
+    lei *ptr=new lei[T];
+    for (int i=0; i<T; i++) {
+        cin >> ptr[i].p>>ptr[i].q>>ptr[i].r;
+        ptr[i].m=func1(ptr[i].p);
+        ptr[i].n=func1(ptr[i].q);
+        ptr[i].l=func1(ptr[i].r);
+        ptr[i].flag=fun2(ptr[i]);
+    }
+    for (int i=0; i<T; i++) {
+        cout <<ptr[i].flag<<endl;
+    }
+    
+    
+    
+    
+    
+    delete [] ptr;
+    return 0;
+}

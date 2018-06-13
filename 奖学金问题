@@ -1,0 +1,76 @@
+//
+//  main.cpp
+//  syx_test2
+//
+//  Created by Lion Heart on 2018/6/10.
+//  Copyright © 2018年 Lion. All rights reserved.
+//
+
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <stdio.h>
+using namespace std;
+
+#define academician 8000;
+#define wusi 4000;
+#define good 2000;
+#define west 1000;
+#define class1 850;
+
+struct information {
+    string name;
+    int paper;
+    double score;
+    double class_score;
+    char west_or_not;
+    char cadre;
+    double sum_monery;
+};
+
+double scholarship(information x)
+{
+    double sum=0;
+    if (x.score>80&&x.paper>0) {
+        sum+=academician;
+    }
+    if (x.score>85&&x.class_score>80) {
+        sum+=wusi;
+    }
+    if (x.score>90) {
+        sum+=good;
+    }
+    if (x.score>85&&x.west_or_not=='Y') {
+        sum+=west;
+    }
+    if (x.class_score>80&&x.cadre=='Y') {
+        sum+=class1;
+    }
+    return sum;
+}
+
+int main()
+{
+    information stu[100];
+    int n,once_flag=0;
+    double max,sum=0;
+    cin>>n;
+    for (int i=0; i<n; i++) {
+        cin >>stu[i].name>>stu[i].score>>stu[i].class_score>>stu[i].cadre>>stu[i].west_or_not>>stu[i].paper;
+        stu[i].sum_monery=scholarship(stu[i]);
+    }
+    max=stu[0].sum_monery;
+    for (int i=0; i<n; i++) {
+        if (stu[i].sum_monery>max) {
+            max=stu[i].sum_monery;
+            once_flag=i;
+        }
+        sum+=stu[i].sum_monery;
+    }
+    cout << stu[once_flag].name<<endl
+    <<stu[once_flag].sum_monery<<endl
+    <<sum<<endl;
+    
+    return 0;
+}

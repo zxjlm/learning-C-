@@ -1,0 +1,113 @@
+//
+//  main.cpp
+//  syx_test2
+//
+//  Created by Lion Heart on 2018/6/10.
+//  Copyright © 2018年 Lion. All rights reserved.
+//
+
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <stdio.h>
+using namespace std;
+
+struct A {
+    int p,r;
+    char n[1000];
+};
+
+int fun_mid(char x)
+{
+    switch (x) {
+        case '1':return 1;
+        case '2':return 2;
+        case '3':return 3;
+        case '4':return 4;
+        case '5':return 5;
+        case '6':return 6;
+        case '7':return 7;
+        case '8':return 8;
+        case '9':return 9;
+        case 'A':return 10;
+        case 'B':return 11;
+        case 'C':return 12;
+        case 'D':return 13;
+        case 'E':return 14;
+        case 'F':return 15;
+            
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+char fum_mid_res(int x)
+{
+    switch (x) {
+        case 1:return '1';
+        case 2:return '2';
+        case 3:return '3';
+        case 4:return '4';
+        case 5:return '5';
+        case 6:return '6';
+        case 7:return '7';
+        case 8:return '8';
+        case 9:return '9';
+        case 10:return 'A';
+        case 11:return 'B';
+        case 12:return 'C';
+        case 13:return 'D';
+        case 14:return 'E';
+        case 15:return 'F';
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+void func_zhuan(int p,int r,char n[])
+{
+    unsigned long len=strlen(n);
+    int sum=0,i=0;
+    char flag[1000],tempchar;
+    int temp;
+    for (unsigned long i=len-1,j=0; j<len; i--,j++) {
+        temp=fun_mid(n[i]);
+        sum+=temp*pow(p, j);
+    }
+    //cout << sum<<endl;
+    while (sum>0) {
+        flag[i]=fum_mid_res(sum%r);
+        sum=sum/r;
+        i++;
+    }
+    //cout << i<<endl;
+    for (int k=i-1,j=0; j<(i)/2; j++,k--) {
+        tempchar=flag[k];
+        flag[k]=flag[j];
+        flag[j]=tempchar;
+    }
+    cout <<flag<<endl;
+}
+
+
+int main()
+{
+    int i=0;
+    A p1[100];
+    while (1) {
+        cin>>p1[i].p>>p1[i].r>>p1[i].n;
+        if (p1[i].p==0&&p1[i].r==0) {
+            break;
+        }
+        i++;
+    }
+    for (int j=0; j<i; j++) {
+        func_zhuan(p1[j].p, p1[j].r, p1[j].n);
+    }
+    
+        return 0;
+}

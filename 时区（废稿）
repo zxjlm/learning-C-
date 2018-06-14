@@ -1,0 +1,127 @@
+//
+//  main.cpp
+//  syx_test2
+//
+//  Created by Lion Heart on 2018/6/10.
+//  Copyright © 2018年 Lion. All rights reserved.
+//
+
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <string.h>
+#include <cstring>
+#include <stdio.h>
+using namespace std;
+
+struct time_tran {
+    string timetable;
+    string start;
+    string end;
+};
+
+string transfer(string start,string end,string time)
+{
+    string a[32]={"UTC","GMT","BST","IST","WET","WEST","CET","CEST","EET","EEST","MSK","MSD","AST","ADT","NST","NDT","EST","EDT","CST","CDT","MST","MDT","PST","PDT","HST","AKST","AKDT","AEST","AEDT","ACST","ACDT","AWST"};
+    string time_alter=0,time_temp;
+    cout<<"aaa"<<endl;
+    double time_differ[32]={0,0,1,1,0,1,1,2,2,3,3,4,-4,-3,-3.5,-2.5,-5,-4,-6,-5,-7,-6,-8,-7,-10,-9,-8,10,11,9.5,10.5,8};
+    double difference;
+    int i,j,k,hour,minute;
+    cout << a[1]<<endl;
+    for (i=0; i<32; i++)
+    {
+        if (a[i]==start) {
+            break;
+        }
+    }
+    for (j=0; j<32; j++)
+    {
+        if (a[j]==end) {
+            break;
+        }
+    }
+    difference=time_differ[i]-time_differ[j];
+    cout << time_differ[14]<<time_differ[15]<<time_differ[29]<<time_differ[30]<<endl;
+    for (k=0; k<3; k++)
+    {
+        if (time[k]!=':') {
+            break;
+        }
+    }
+    if (k==0) {
+        hour=(int)time[0];
+        minute=(int)time[2]*10+(int)time[3];
+    }
+    else{
+        hour=(int)time[0]*10+(int)time[1];
+        minute=(int)time[3]*10+(int)time[4];
+    }
+    if (floor(difference)!=difference) {
+        minute+=30;
+        hour+=floor(difference);
+        if (minute>=60) {
+            minute-=60;
+            hour++;
+        }
+    }
+    else
+    {
+        hour+=difference;
+    }
+    cout << hour << "  "<<minute;
+    
+    return time_alter;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    time_tran p[1000];
+    for (int i=0; i<n; i++) {
+        //cin>> p[i].timetable>>p[i].start>>p[i].end;
+        //transfer(p[i].start, p[i].end, p[i].timetable);
+    }
+    string a[3]={"asdsda","asdasdas","asdaqw"};
+    
+    
+    return 0;
+    
+}
+
+
+
+/*UTC (Coordinated Universal Time), 定义为 UTC
+GMT(Greenwich Mean Time), 定义为 UTC
+BST (British Summer Time), 定义为 UTC+1 hour
+IST (Irish Summer Time), 定义为 UTC+1 hour
+WET (Western Europe Time), 定义为 UTC
+WEST (Western Europe Summer Time), 定义为 UTC+1 hour
+CET (Central Europe Time), 定义为 UTC+1 hour
+CEST (Central Europe Summer Time), 定义为 UTC+2 hours
+EET (Eastern Europe Time), 定义为 UTC+2 hours
+EEST (Eastern Europe Summer Time), 定义为 UTC+3 hours
+MSK (Moscow Time), 定义为 UTC+3 hours
+MSD (Moscow Summer Time), 定义为 UTC+4 hours
+AST (Atlantic Standard Time), 定义为 UTC-4 hours
+ADT (Atlantic Daylight Time), 定义为 UTC-3 hours
+NST (Newfoundland Standard Time), 定义为 UTC-3.5 hours
+NDT (Newfoundland Daylight Time), 定义为 UTC-2.5 hours
+EST (Eastern Standard Time), 定义为 UTC-5 hours
+EDT (Eastern Daylight Saving Time), 定义为 UTC-4 hours
+CST (Central Standard Time), 定义为 UTC-6 hours
+CDT (Central Daylight Saving Time), 定义为 UTC-5 hours
+MST (Mountain Standard Time), 定义为 UTC-7 hours
+MDT (Mountain Daylight Saving Time), 定义为 UTC-6 hours
+PST (Pacific Standard Time), 定义为 UTC-8 hours
+PDT (Pacific Daylight Saving Time), 定义为 UTC-7 hours
+HST (Hawaiian Standard Time), 定义为 UTC-10 hours
+AKST (Alaska Standard Time), 定义为 UTC-9 hours
+AKDT (Alaska Standard Daylight Saving Time), 定义为 UTC-8 hours
+AEST (Australian Eastern Standard Time), 定义为 UTC+10 hours
+AEDT (Australian Eastern Daylight Time), 定义为 UTC+11 hours
+ACST (Australian Central Standard Time), 定义为 UTC+9.5 hours
+ACDT (Australian Central Daylight Time), 定义为 UTC+10.5 hours
+AWST (Australian Western Standard Time), 定义为 UTC+8 hours
+*/

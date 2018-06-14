@@ -18,17 +18,27 @@ struct time_tran {
     string timetable;
     string start;
     string end;
+    string p_a1;
 };
 
-string transfer(string start,string end,string time)
+char shift(char p_a)
+{
+    if (p_a=='p') {
+        return 'a';
+    }
+    else{
+        return 'p';
+    }
+}
+
+void transfer(string time,string p_a1,string start="UTC",string end="ACDT")
 {
     string a[32]={"UTC","GMT","BST","IST","WET","WEST","CET","CEST","EET","EEST","MSK","MSD","AST","ADT","NST","NDT","EST","EDT","CST","CDT","MST","MDT","PST","PDT","HST","AKST","AKDT","AEST","AEDT","ACST","ACDT","AWST"};
-    string time_alter=0,time_temp;
-    cout<<"aaa"<<endl;
+    string time_alter="aaaa",time_temp;
     double time_differ[32]={0,0,1,1,0,1,1,2,2,3,3,4,-4,-3,-3.5,-2.5,-5,-4,-6,-5,-7,-6,-8,-7,-10,-9,-8,10,11,9.5,10.5,8};
     double difference;
-    int i,j,k,hour,minute;
-    cout << a[1]<<endl;
+    int i,j,k,hour,minute,flag=0,flag1=0;
+    char p_a=p_a1[0];
     for (i=0; i<32; i++)
     {
         if (a[i]==start) {
@@ -41,25 +51,41 @@ string transfer(string start,string end,string time)
             break;
         }
     }
+   // cout <<(a[0]==end)<<endl<<a[0]<<endl<<end<<endl;
     difference=time_differ[i]-time_differ[j];
-    cout << time_differ[14]<<time_differ[15]<<time_differ[29]<<time_differ[30]<<endl;
+    //cout <<i<<endl<<time_differ[i]<<endl<<time_differ[j]<<endl;
     for (k=0; k<3; k++)
     {
-        if (time[k]!=':') {
+        if (time[k]==':') {
             break;
         }
     }
+    k--;
+    //cout <<k<<endl<<difference<<endl;
     if (k==0) {
-        hour=(int)time[0];
-        minute=(int)time[2]*10+(int)time[3];
+        hour=time[0]-'0';
+        minute=(time[2]-'0')*10+(time[3]-'0');
+    }
+    else if (time[0]=='m'){
+        hour=24;
+        minute=0;
+    }
+    else if (time[0]=='n'){
+        hour=12;
+        minute=0;
     }
     else{
-        hour=(int)time[0]*10+(int)time[1];
-        minute=(int)time[3]*10+(int)time[4];
+        hour=(time[0]-'0')*10+(time[1]-'0');
+        minute=(time[3]-'0')*10+(time[4]-'0');
+    }
+    //cout << hour << "  "<<minute<<endl;
+    if (p_a1[0]=='p') {
+        hour+=12;
+        //p_a=shift(p_a);
     }
     if (floor(difference)!=difference) {
         minute+=30;
-        hour+=floor(difference);
+        hour-=floor(difference);
         if (minute>=60) {
             minute-=60;
             hour++;
@@ -67,11 +93,34 @@ string transfer(string start,string end,string time)
     }
     else
     {
-        hour+=difference;
+        hour-=difference;
     }
-    cout << hour << "  "<<minute;
+    //cout <<difference<<endl<< hour <<endl;
+    if (hour<=0) {
+        hour+=24;
+    }
+    if (hour>24) {
+        hour-=24;
+    }
+   // cout << hour<<minute <<endl;
+    if (hour==24&&minute==0) {
+        flag1=1;
+    }
+    if (hour>12) {
+        hour-=12;
+        p_a=shift(p_a);
+    }
     
-    return time_alter;
+    if (hour==12&&minute==0&&flag1==0) {
+        cout << "noon"<<endl;
+    }
+    else if (flag1==1){
+        cout << "midnight"<<endl;
+    }
+    else{
+    cout << hour<<":"<<minute<<" " <<p_a<<".m."<<endl;
+    }
+    
 }
 
 int main()
@@ -79,16 +128,31 @@ int main()
     int n;
     cin>>n;
     time_tran p[1000];
+    string a[1000];
     for (int i=0; i<n; i++) {
-        //cin>> p[i].timetable>>p[i].start>>p[i].end;
-        //transfer(p[i].start, p[i].end, p[i].timetable);
+        cin>> p[i].timetable;
+        if (p[i].timetable=="noon") {
+            p[i].p_a1="a.m.";
+            cin>>p[i].start>>p[i].end;
+        }
+        else if (p[i].timetable=="midnight") {
+            p[i].p_a1="p.m.";
+            cin>>p[i].start>>p[i].end;
+        }
+        else
+        {
+            cin>>p[i].p_a1>>p[i].start>>p[i].end;
+        }
     }
-    string a[3]={"asdsda","asdasdas","asdaqw"};
+    for (int i=0; i<n; i++) {
+        transfer( p[i].timetable,p[i].p_a1, p[i].start, p[i].end);
+    }
     
     
     return 0;
     
 }
+
 
 
 

@@ -1,0 +1,37 @@
+#include<iostream>
+#include <string>
+#include <cstring>
+#include <string.h>
+using namespace std;
+
+
+int func(int x,int flag)
+{
+    if (x==1) {
+        flag++;
+    }
+    else
+    {
+        flag=func(x-1,flag);
+        flag++;
+        flag=func(x-1,flag);
+    }
+    return flag;
+}
+
+int main()
+{
+    int conter=0,flag=0;
+    int x,serve[2];
+    while (conter<2) {
+        cin >> x;
+        serve[conter]=func(x,flag);
+        conter++;
+    }
+    for (int  i=0; i<conter; i++) {
+        cout << serve[i]<<endl;
+    }
+    
+    
+    return 0;
+}

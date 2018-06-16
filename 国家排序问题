@@ -1,0 +1,55 @@
+#include<iostream>
+#include <string>
+#include <cstring>
+#include <string.h>
+using namespace std;
+struct information
+{
+    int ordernum;
+    string name;
+    int num;
+    string name2;
+    int flag;
+};
+int main()
+{
+    int n,i,b=1;
+    information temp;
+    cin >> n;
+    information *con1=new information[n];
+    for (i=0; i<n; i++) {
+        
+        cin >> con1[i].ordernum >> con1[i].name >> con1[i].num >> con1[i].name2;
+        con1[i].flag=i;
+    }
+    for(i=0;i<n;i++)
+    {
+        int m=i;
+        for (int j=i;j<n;j++)
+        {
+            if (con1[i].name>con1[j].name)
+                m=j;
+        }
+        temp=con1[i];
+        con1[i]=con1[m];
+        con1[m]=temp;
+    }
+    for(i=0;i<n;i++)
+    {
+        if(con1[i].name=="China")
+        {
+            b=i;
+        }
+    }
+    for(i=0;i<b;i++)
+    {
+        cout << con1[i].ordernum <<" " << con1[i].name <<" " << con1[i].num <<" " << con1[i].name2<< endl;
+    }
+    for (i=b+1; i<n; i++) {
+        cout << con1[i].ordernum <<" " << con1[i].name <<" " << con1[i].num <<" " << con1[i].name2 << endl;
+    }
+    cout << con1[b].ordernum <<" " << con1[b].name <<" " << con1[b].num <<" " << con1[b].name2 << endl;
+    
+    delete [] con1;
+    return 0;
+}
